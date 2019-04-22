@@ -61,6 +61,10 @@ function drawSpectrum() {
   }
 }
 
+function mouseClicked() {
+  resetSketch();
+}
+
 function drawWave() {
   colorMode(RGB);
   var waveform = fft.waveform();
