@@ -71,8 +71,8 @@ function drawWave() {
   var waveform = fft.waveform();
   noFill();
   beginShape();
-  stroke(255,0,0); // waveform is red
-  strokeWeight(1);
+  stroke(255,255,0); // waveform is yellow
+  strokeWeight(3);
   for (var i = 0; i< waveform.length; i++){
     var x = map(i, 0, waveform.length, 0, width);
     var y = map( waveform[i], -1, 1, 0, height);
