@@ -2,6 +2,7 @@ var amplitude = 0;
 let mic, recorder, soundFile;
 var numCirclesX = 20;
 var numCirclesY = 10;
+var startVisualization = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -28,7 +29,9 @@ function setup() {
 }
 
 function draw() {
-  drawSketch();
+  if (startVisualization){
+    drawSketch();
+  }
 }
 
 function drawSketch() {
@@ -86,7 +89,7 @@ function keyTyped(){
   }
   if (key === 'v') {
     console.log("called drawSketch()")
-    drawSketch();
+    startVisualization = true;
   }
 }
 
