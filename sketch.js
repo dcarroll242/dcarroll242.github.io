@@ -85,6 +85,7 @@ function keyTyped(){
     soundFile.play();
   }
   if (key === 'v') {
+    console.log("called drawSketch()")
     drawSketch();
   }
 }
