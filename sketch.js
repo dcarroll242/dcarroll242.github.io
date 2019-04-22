@@ -2,12 +2,29 @@ var amplitude = 0;
 let mic, recorder, soundFile;
 var numCirclesX = 20;
 var numCirclesY = 10;
-var startVisualization = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(50);
 
+  resetSketch();
+}
+
+function draw() {
+  colorMode(RGB);
+  drawCircles();
+  background(0,0,0,25);
+  var level = analyzer.getLevel();
+  var size = map(level, 0, 1, 0, 800);
+
+  fill(0,0,255);
+  ellipse(width/2, height/2, size*5, size*5);
+
+  drawSpectrum();
+  drawWave();
+}
+
+function resetSketch() {
   // create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
   // create an audio in
@@ -26,26 +43,6 @@ function setup() {
   fft = new p5.FFT();
   // Set Input to microphone
   fft.setInput(mic);
-}
-
-function draw() {
-  if (startVisualization){
-    drawSketch();
-  }
-}
-
-function drawSketch() {
-  colorMode(RGB);
-  drawCircles();
-  background(0,0,0,25);
-  var level = analyzer.getLevel();
-  var size = map(level, 0, 1, 0, 800);
-
-  fill(0,0,255);
-  ellipse(width/2, height/2, size*5, size*5);
-
-  drawSpectrum();
-  drawWave();
 }
 
 function drawSpectrum() {
@@ -88,8 +85,8 @@ function keyTyped(){
     soundFile.play();
   }
   if (key === 'v') {
-    console.log("called drawSketch()")
-    startVisualization = true;
+    console.log("called drawSketch")
+    drawSketch();
   }
 }
 
