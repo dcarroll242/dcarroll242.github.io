@@ -3,6 +3,11 @@ let mic, recorder, soundFile;
 var numCirclesX = 20;
 var numCirclesY = 10;
 
+function preload() {
+  soundFormats('mp3', 'ogg','wav');
+  applause = loadSound('assets/sounds/applause');
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(50);
@@ -74,6 +79,10 @@ function drawWave() {
     vertex(x,y);
   }
   endShape();
+}
+
+function mouseClicked() {
+  applause.play();
 }
 
 // function keyTyped(){
