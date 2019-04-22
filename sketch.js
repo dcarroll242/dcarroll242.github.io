@@ -42,7 +42,7 @@ function resetSketch() {
   // Setup fast Fourier Transform
   fft = new p5.FFT();
   // Set Input to microphone
-  fft.setInput(mic);
+  fft.setInput();
 }
 
 function drawSpectrum() {
