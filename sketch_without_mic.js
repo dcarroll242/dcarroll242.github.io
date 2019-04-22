@@ -28,21 +28,21 @@ function resetSketch() {
   // create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
   // create an audio in
-  // mic = new p5.AudioIn();
-  // // users must manually enable their browser microphone for recording to work properly!
-  // mic.start();
-  // // create a sound recorder
-  // recorder = new p5.SoundRecorder();
-  // // connect the mic to the recorder
-  // recorder.setInput(mic);
-  // // create an empty sound file that we will use to playback the recording
-  // soundFile = new p5.SoundFile();
+  mic = new p5.AudioIn();
+  // users must manually enable their browser microphone for recording to work properly!
+  mic.start();
+  // create a sound recorder
+  recorder = new p5.SoundRecorder();
+  // connect the mic to the recorder
+  recorder.setInput(mic);
+  // create an empty sound file that we will use to playback the recording
+  soundFile = new p5.SoundFile();
   // Patch the input to an volume analyzer
-  analyzer.setInput();
+  analyzer.setInput(mic);
   // Setup fast Fourier Transform
   fft = new p5.FFT();
   // Set Input to microphone
-  fft.setInput();
+  fft.setInput(mic);
 }
 
 function drawSpectrum() {
@@ -61,6 +61,10 @@ function drawSpectrum() {
   }
 }
 
+function mouseClicked() {
+  resetSketch();
+}
+
 function drawWave() {
   colorMode(RGB);
   var waveform = fft.waveform();
@@ -76,26 +80,26 @@ function drawWave() {
   endShape();
 }
 
-// function keyTyped(){
-//   if (key === 'r' && mic.enabled) {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.record(soundFile);
-//   }
-//   if (key === 'p') {
-//     soundFile.play();
-//   }
-//   if (key === 'v') {
-//     console.log("called drawSketch")
-//     drawSketch();
-//   }
-// }
-//
-// function keyReleased(){
-//   if (key === 'r') {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.stop();
-//   }
-// }
+function keyTyped(){
+  if (key === 'r' && mic.enabled) {
+    // Tell recorder to record to a p5.SoundFile which we will use for playback
+    recorder.record(soundFile);
+  }
+  if (key === 'p') {
+    soundFile.play();
+  }
+  if (key === 'v') {
+    console.log("called drawSketch")
+    drawSketch();
+  }
+}
+
+function keyReleased(){
+  if (key === 'r') {
+    // Tell recorder to record to a p5.SoundFile which we will use for playback
+    recorder.stop();
+  }
+}
 
 // Draw the circles
 function drawCircles(){
