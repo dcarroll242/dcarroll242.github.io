@@ -29,6 +29,10 @@ function draw() {
   drawWave();
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function resetSketch() {
   // create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
