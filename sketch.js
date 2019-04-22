@@ -23,7 +23,7 @@ function draw() {
   var size = map(level, 0, 1, 0, 800);
 
   fill(0,0,255);
-  ellipse(width/2, height/2, size*3, size*3);
+  ellipse(width/2, height/2, size, size);
 
   drawSpectrum();
   drawWave();
