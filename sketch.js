@@ -79,6 +79,7 @@ function drawWave() {
     vertex(x,y);
   }
   endShape();
+  strokeWeight(1);
 }
 
 function mouseClicked() {
