@@ -5,7 +5,7 @@ var numCirclesY = 10;
 
 function preload() {
   soundFormats('mp3', 'ogg','wav');
-  applause = loadSound('assets/sounds/applause');
+  applause = loadSound('assets/sounds/applause.wav');
 }
 
 function setup() {
