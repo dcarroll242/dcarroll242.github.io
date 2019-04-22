@@ -33,9 +33,10 @@ function resetSketch() {
   // create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
   // create an audio in
-  // mic = new p5.AudioIn();
-  // // users must manually enable their browser microphone for recording to work properly!
-  // mic.start();
+  mic = new p5.AudioIn();
+  mic.connect();
+  // users must manually enable their browser microphone for recording to work properly!
+  mic.start();
   // // create a sound recorder
   // recorder = new p5.SoundRecorder();
   // // connect the mic to the recorder
@@ -43,11 +44,11 @@ function resetSketch() {
   // // create an empty sound file that we will use to playback the recording
   // soundFile = new p5.SoundFile();
   // Patch the input to an volume analyzer
-  analyzer.setInput();
+  analyzer.setInput(mic);
   // Setup fast Fourier Transform
   fft = new p5.FFT();
   // Set Input to microphone
-  fft.setInput();
+  fft.setInput(mic);
 }
 
 function drawSpectrum() {
