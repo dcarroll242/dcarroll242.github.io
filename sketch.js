@@ -28,6 +28,10 @@ function setup() {
 }
 
 function draw() {
+  drawSketch();
+}
+
+function drawSketch() {
   colorMode(RGB);
   drawCircles();
   background(0,0,0,25);
@@ -79,6 +83,9 @@ function keyTyped(){
   }
   if (key === 'p') {
     soundFile.play();
+  }
+  if (key === 'v') {
+    drawSketch();
   }
 }
 
