@@ -5,7 +5,7 @@ var numCirclesY = 10;
 
 function preload() {
   soundFormats('mp3', 'ogg','wav');
-  applause = loadSound('assets/sounds/applause.wav');
+  summerNights = loadSound('assets/sounds/liqwyd-summer-nights.wav');
 }
 
 function setup() {
@@ -82,11 +82,15 @@ function drawWave() {
 }
 
 function mouseClicked() {
-  applause.play();
+  if (!summerNights.isPlaying()){
+    summerNights.play();
+  }
 }
 
 function touchStarted() {
-  applause.play();
+  if (!summerNights.isPlaying()){
+    summerNights.play();
+  }
 }
 
 function touchMoved() {
