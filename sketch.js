@@ -89,6 +89,10 @@ function touchStarted() {
   applause.play();
 }
 
+function touchMoved() {
+  return false;
+}
+
 // function keyTyped(){
 //   if (key === 'r' && mic.enabled) {
 //     // Tell recorder to record to a p5.SoundFile which we will use for playback
