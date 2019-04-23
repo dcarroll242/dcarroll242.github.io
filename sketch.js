@@ -2,10 +2,30 @@ var amplitude = 0;
 let mic, recorder, soundFile;
 var numCirclesX = 20;
 var numCirclesY = 10;
+var songs = [];
+var currentSong = 0;
 
 function preload() {
   soundFormats('mp3', 'ogg','wav');
-  summerNights = loadSound('assets/sounds/liqwyd-summer-nights.wav');
+  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav'));
+  songs.push(loadSound('assets/sounds/bensound-acousticbreeze.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-anewbeginning.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-creativeminds.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-cute.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-dubstep.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-endlessmotion.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-energy.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-epic.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-goinghigher.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-happyrock.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-inspire.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-perception.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-pianomoment.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-retrosoul.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-slowmotion.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-summer.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-sunny.mp3'));
+  songs.push(loadSound('assets/sounds/bensound-ukulele.mp3'));
 }
 
 function setup() {
@@ -87,19 +107,47 @@ function drawWave() {
 }
 
 function mouseClicked() {
-  if (!summerNights.isPlaying()){
-    summerNights.play();
+  if (!songs[currentSong].isPlaying()){
+    songs[currentSong].play();
   }
 }
 
 function touchStarted() {
-  if (!summerNights.isPlaying()){
-    summerNights.play();
+  if (!songs[currentSong].isPlaying()){
+    songs[currentSong].play();
   }
 }
 
 function touchMoved() {
   return false;
+}
+
+function keyPressed() {
+  if (key === 'ArrowLeft') {
+    if (songs[currentSong].isPlaying()) {
+      songs[currentSong].stop();
+    }
+    currentSong = (currentSong - 1) % songs.length;
+    if (currentSong == -1){
+      currentSong = songs.length - 1
+    }
+    songs[currentSong].play();
+  }
+  if (key === 'ArrowRight') {
+    if (songs[currentSong].isPlaying()) {
+      songs[currentSong].stop();
+    }
+    currentSong = (currentSong + 1) % songs.length;
+    songs[currentSong].play();
+  }
+  if (key === 'ArrowUp'){
+    if (!songs[currentSong].isPlaying()){
+      songs[currentSong].play();
+    }
+    else {
+      songs[currentSong].pause();
+    }
+  }
 }
 
 // function keyTyped(){
