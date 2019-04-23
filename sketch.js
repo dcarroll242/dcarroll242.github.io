@@ -153,6 +153,14 @@ function keyPressed() {
   }
 }
 
+function doubleClicked() {
+  if (songs[currentSong].isPlaying()) {
+    songs[currentSong].stop();
+  }
+  currentSong = (currentSong + 1) % songs.length;
+  songs[currentSong].play();
+}
+
 // function keyTyped(){
 //   if (key === 'r' && mic.enabled) {
 //     // Tell recorder to record to a p5.SoundFile which we will use for playback
