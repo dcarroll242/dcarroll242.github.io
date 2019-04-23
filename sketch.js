@@ -148,6 +148,9 @@ function keyPressed() {
       songs[currentSong].pause();
     }
   }
+  if (key == 'ArrowDown') {
+    songs[currentSong].stop();
+  }
 }
 
 // function keyTyped(){
