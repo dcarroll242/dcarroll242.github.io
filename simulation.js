@@ -3,7 +3,7 @@ let results = ["W", "W", "W", "W", "L", "L", "L", "L", "L", "L"];
 let simulations = [];
 
 function setup() {
-  createCanvas(1000, 500);
+  createCanvas(800, 500);
 
   button = createButton('Generate Simulation');
   button.position(50, 10);
