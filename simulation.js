@@ -32,6 +32,10 @@ function draw() {
     if(r < 20){text("Simulation " + num + ":     " + stringBuild + "  " + score, 50, 50 + r*20);}
     else{text("Simulation " + num + ":     " + stringBuild + "  " + score, 450, 50 + (r-20)*20);}
   }
+
+  if(simulations.length == 40){
+    text("<Maximum of 40 Simulations Allowed>", 450, 50 + (40-20)*20);
+  }
 }
 
 function generate() {
