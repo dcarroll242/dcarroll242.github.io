@@ -5,7 +5,7 @@ let simulations = [];
 function setup() {
   createCanvas(1000, 500);
 
-  button = createButton('Generate');
+  button = createButton('Generate Simulation');
   button.position(50, 10);
   button.mousePressed(generate);
   checkbox = createCheckbox('Show Scores', false);
