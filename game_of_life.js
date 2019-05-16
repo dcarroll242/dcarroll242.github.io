@@ -8,7 +8,7 @@ function make2DArray(cols, rows){
   return arr;
 }
 
-let grid, cols, rows, resolution = 8;
+let grid, cols, rows, resolution = 4;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
