@@ -1,3 +1,4 @@
+var play = true;
 
 function make2DArray(cols, rows){
   let arr = new Array(cols);
@@ -7,12 +8,12 @@ function make2DArray(cols, rows){
   return arr;
 }
 
-let grid, cols, rows, resolution = 4;
+let grid, cols, rows, resolution = 8;
 
 function setup() {
-  createCanvas(1200, 640);
-  cols = width / resolution;
-  rows = height / resolution;
+  createCanvas(windowWidth, windowHeight);
+  cols = Math.floor(width / resolution);
+  rows = Math.floor(height / resolution);
 
   grid = make2DArray(cols, rows);
   for(let i = 0; i < cols; i++){
@@ -26,29 +27,31 @@ function setup() {
 function draw() {
   background(0);
 
-  let next = make2DArray(cols, rows);
+  if(play){
+    let next = make2DArray(cols, rows);
 
-  for(let i = 0; i < cols; i++){
-    for(let j = 0; j < rows; j++){
-      let state = grid[i][j];
+    for(let i = 0; i < cols; i++){
+      for(let j = 0; j < rows; j++){
+        let state = grid[i][j];
 
-      let sum = 0;
-      let neighbors = countNeighbors(grid, i, j);
+        let sum = 0;
+        let neighbors = countNeighbors(grid, i, j);
 
 
-      if(state == 0 && neighbors == 3){
-        next[i][j] = 1;
-      }
-      else if(state == 1 && (neighbors < 2 || neighbors > 3)){
-        next[i][j] = 0;
-      }
-      else{
-        next[i][j] = grid[i][j];
+        if(state == 0 && neighbors == 3){
+          next[i][j] = 1;
+        }
+        else if(state == 1 && (neighbors < 2 || neighbors > 3)){
+          next[i][j] = 0;
+        }
+        else{
+          next[i][j] = grid[i][j];
+        }
       }
     }
-  }
 
-  grid = next;
+    grid = next;
+  }
 
   for(let i = 0; i < cols; i++){
     for(let j = 0; j < rows; j++){
@@ -56,7 +59,7 @@ function draw() {
       let y = j * resolution;
       if(grid[i][j] == 1){
         fill(255);
-        rect(x, y, resolution-1, resolution-1);
+        rect(x, y, resolution, resolution);
       }
     }
   }
@@ -74,4 +77,13 @@ function countNeighbors(grid, x, y){
   }
   sum -= grid[x][y];
   return sum;
+}
+
+function mouseClicked(){
+  if(play){
+    play = false;
+  }
+  else{
+    play = true;
+  }
 }
