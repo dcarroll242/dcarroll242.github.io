@@ -1,13 +1,4 @@
-var play = true;
-
-function make2DArray(cols, rows){
-  let arr = new Array(cols);
-  for(let i = 0; i < arr.length; i++){
-    arr[i] = new Array(rows);
-  }
-  return arr;
-}
-
+let play = true;
 let grid, cols, rows, resolution = 4;
 
 function setup() {
@@ -21,7 +12,6 @@ function setup() {
       grid[i][j] = floor(random(2));
     }
   }
-
 }
 
 function draw() {
@@ -63,6 +53,14 @@ function draw() {
       }
     }
   }
+}
+
+function make2DArray(cols, rows){
+  let arr = new Array(cols);
+  for(let i = 0; i < arr.length; i++){
+    arr[i] = new Array(rows);
+  }
+  return arr;
 }
 
 function countNeighbors(grid, x, y){
