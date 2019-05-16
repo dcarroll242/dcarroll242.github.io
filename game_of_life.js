@@ -1,5 +1,5 @@
 let play = true;
-let grid, cols, rows, resolution = 4;
+let grid, cols, rows, resolution = 8;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
