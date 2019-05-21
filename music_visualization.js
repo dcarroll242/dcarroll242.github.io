@@ -199,7 +199,7 @@ function drawCircles(){
 function getDistance(x, y){
   let tempMouseX = mouseX;
   let tempMouseY = mouseY;
-  let buffer = 100;
+  let buffer = 25;
   if(mouseX < buffer || mouseX > windowWidth - buffer ||
      mouseY < buffer || mouseY > windowHeight - buffer){
     tempMouseX = windowWidth/2;
