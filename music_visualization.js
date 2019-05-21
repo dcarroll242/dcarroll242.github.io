@@ -4,6 +4,7 @@ var numCirclesX = 20;
 var numCirclesY = 10;
 var songs = [];
 var currentSong = 0;
+var pause = false;
 
 function preload() {
   soundFormats('mp3', 'ogg','wav');
@@ -47,6 +48,9 @@ function draw() {
 
   drawSpectrum();
   drawWave();
+
+  if(pause){noloop();}
+  else{loop();}
 }
 
 function windowResized() {
@@ -147,6 +151,8 @@ function keyPressed() {
     else {
       songs[currentSong].pause();
     }
+    if (pause) {pause = false;}
+    else {pause = true;}
   }
   if (key == 'ArrowDown') {
     songs[currentSong].stop();
