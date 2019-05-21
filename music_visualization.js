@@ -53,7 +53,7 @@ function draw() {
     background(0);
     drawSpectrum();
     drawWave();
-    noloop();
+    noLoop();
   }
   else{loop();}
 }
