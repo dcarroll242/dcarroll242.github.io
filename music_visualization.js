@@ -49,7 +49,12 @@ function draw() {
   drawSpectrum();
   drawWave();
 
-  if(pause){noloop();}
+  if(pause){
+    background(0);
+    drawSpectrum();
+    drawWave();
+    noloop();
+  }
   else{loop();}
 }
 
