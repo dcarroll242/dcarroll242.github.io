@@ -4,7 +4,8 @@ var numCirclesX = 20;
 var numCirclesY = 10;
 var songs = [];
 var currentSong = 0;
-var pause = false;
+var pauseMusic = false;
+var playingMusic = true;
 
 function preload() {
   soundFormats('mp3', 'ogg','wav');
@@ -37,25 +38,24 @@ function setup() {
 }
 
 function draw() {
-  colorMode(RGB);
-  drawCircles();
-  background(0,0,0,25);
-  var level = analyzer.getLevel();
-  var size = map(level, 0, 1, 0, 800);
+  if(!pauseMusic){
+    colorMode(RGB);
+    drawCircles();
+    background(0,0,0,25);
+    var level = analyzer.getLevel();
+    var size = map(level, 0, 1, 0, 800);
 
-  fill(0,0,255);
-  ellipse(width/2, height/2, size, size);
+    fill(0,0,255);
+    ellipse(width/2, height/2, size, size);
 
-  drawSpectrum();
-  drawWave();
-
-  if(pause){
-    background(0);
     drawSpectrum();
     drawWave();
-    noLoop();
+
+    if(playingMusic && !songs[currentSong].isPlaying()){
+      currentSong = (currentSong + 1) % songs.length;
+      songs[currentSong].play();
+    }
   }
-  else{loop();}
 }
 
 function windowResized() {
@@ -133,6 +133,7 @@ function touchMoved() {
 
 function keyPressed() {
   if (key === 'ArrowLeft') {
+    playingMusic = true;
     if (songs[currentSong].isPlaying()) {
       songs[currentSong].stop();
     }
@@ -143,6 +144,7 @@ function keyPressed() {
     songs[currentSong].play();
   }
   if (key === 'ArrowRight') {
+    playingMusic = true;
     if (songs[currentSong].isPlaying()) {
       songs[currentSong].stop();
     }
@@ -156,10 +158,14 @@ function keyPressed() {
     else {
       songs[currentSong].pause();
     }
-    if (pause) {pause = false;}
-    else {pause = true;}
+    if (pauseMusic) {
+      pauseMusic = false;
+      playingMusic = true;
+    }
+    else {pauseMusic = true;}
   }
   if (key == 'ArrowDown') {
+    playingMusic = false;
     songs[currentSong].stop();
   }
 }
