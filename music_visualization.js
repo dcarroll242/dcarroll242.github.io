@@ -197,7 +197,15 @@ function drawCircles(){
 
 // Return distance from a point to the mouse.
 function getDistance(x, y){
-  return Math.pow((Math.pow((x - mouseX),2) + Math.pow((y - mouseY),2)),0.5);
+  let tempMouseX = mouseX;
+  let tempMouseY = mouseY;
+  let buffer = 100;
+  if(mouseX < buffer || mouseX > windowWidth - buffer ||
+     mouseY < buffer || mouseY > windowHeight - buffer){
+    tempMouseX = windowWidth/2;
+    tempMouseY = windowHeight/2;
+  }
+  return Math.pow((Math.pow((x - tempMouseX),2) + Math.pow((y - tempMouseY),2)),0.5);
 }
 
 // Constrain Distance
