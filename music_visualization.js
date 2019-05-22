@@ -34,8 +34,6 @@ function setup() {
   songs.push(loadSound('assets/sounds/bensound-summer.mp3'));
   songs.push(loadSound('assets/sounds/bensound-sunny.mp3'));
   songs.push(loadSound('assets/sounds/bensound-ukulele.mp3'));
-
-  resetSketch();
 }
 
 function draw() {
