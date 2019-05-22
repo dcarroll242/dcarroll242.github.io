@@ -159,7 +159,6 @@ function doubleClicked() {
 
 function keyPressed() {
   if(songLoaded){
-    console.log("Key Pressed: " + key);
     if (key === 'ArrowLeft') {
       playingMusic = true;
       pausedMusic = false;
