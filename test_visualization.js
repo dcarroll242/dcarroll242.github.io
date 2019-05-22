@@ -15,7 +15,7 @@ function setup() {
   background(50);
 
   soundFormats('mp3', 'ogg','wav');
-  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav'));
+  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav', songLoadedSuccessfully));
   songs.push(loadSound('assets/sounds/bensound-acousticbreeze.mp3'));
   songs.push(loadSound('assets/sounds/bensound-anewbeginning.mp3'));
   songs.push(loadSound('assets/sounds/bensound-creativeminds.mp3'));
@@ -23,25 +23,14 @@ function setup() {
   songs.push(loadSound('assets/sounds/bensound-dubstep.mp3'));
   songs.push(loadSound('assets/sounds/bensound-endlessmotion.mp3'));
   songs.push(loadSound('assets/sounds/bensound-energy.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-epic.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-goinghigher.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-happyrock.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-inspire.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-perception.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-pianomoment.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-retrosoul.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-slowmotion.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-summer.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-sunny.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-ukulele.mp3'));
 
   resetSketch();
 }
 
 function draw() {
+
   if(!pausedMusic && songLoaded){
     colorMode(RGB);
-    drawCircles();
     background(0,0,0,25);
     var level = analyzer.getLevel();
     var size = map(level, 0, 1, 0, 800);
@@ -57,6 +46,12 @@ function draw() {
       songs[currentSong].play();
     }
   }
+  else if(pausedMusic && songLoaded){
+    background(0,0,0,25);
+    drawSpectrum();
+    drawWave();
+  }
+
 }
 
 function windowResized() {
@@ -124,32 +119,6 @@ function drawWave() {
   strokeWeight(1);
 }
 
-function mouseClicked() {
-  if (pausedMusic || !playingMusic) {
-    songs[currentSong].play();
-    pausedMusic = false;
-    playingMusic = true;
-  }
-  else {
-    songs[currentSong].pause();
-    pausedMusic = true;
-    playingMusic = true;
-  }
-}
-
-function touchStarted() {
-  if (pausedMusic || !playingMusic) {
-    songs[currentSong].play();
-    pausedMusic = false;
-    playingMusic = true;
-  }
-  else {
-    songs[currentSong].pause();
-    pausedMusic = true;
-    playingMusic = true;
-  }
-}
-
 function keyPressed() {
   if(songLoaded){
     console.log("Key Pressed: " + key);
@@ -191,72 +160,5 @@ function keyPressed() {
       pausedMusic = false;
       songs[currentSong].stop();
     }
-  }
-}
-
-function doubleClicked() {
-  playingMusic = true;
-  pausedMusic = false;
-  if (songs[currentSong].isPlaying()) {
-    songs[currentSong].stop();
-  }
-  currentSong = (currentSong + 1) % songs.length;
-  songs[currentSong].play();
-}
-
-// function keyTyped(){
-//   if (key === 'r' && mic.enabled) {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.record(soundFile);
-//   }
-//   if (key === 'p') {
-//     soundFile.play();
-//   }
-//   if (key === 'v') {
-//     console.log("called drawSketch")
-//     drawSketch();
-//   }
-// }
-//
-// function keyReleased(){
-//   if (key === 'r') {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.stop();
-//   }
-// }
-
-// Draw the circles
-function drawCircles(){
-  for(var i = 0; i < numCirclesX; i++){
-    for(var j = 0; j < numCirclesY; j++){
-      stroke(5);
-      fill(random(100, 150), random(0, 25), random(100, 150));
-      var distance = getDistance(i*(windowWidth/numCirclesX) + (windowWidth/numCirclesX)/2, j*(windowHeight/numCirclesY) + (windowHeight/numCirclesY)/2);
-      distance = constrainDistance(distance);
-      circle(i*(windowWidth/numCirclesX) + (windowWidth/numCirclesX)/2, j*(windowHeight/numCirclesY) + (windowHeight/numCirclesY)/2, distance);
-    }
-  }
-}
-
-// Return distance from a point to the mouse.
-function getDistance(x, y){
-  let tempMouseX = mouseX;
-  let tempMouseY = mouseY;
-  let buffer = 25;
-  if(mouseX < buffer || mouseX > windowWidth - buffer ||
-     mouseY < buffer || mouseY > windowHeight - buffer){
-    tempMouseX = windowWidth/2;
-    tempMouseY = windowHeight/2;
-  }
-  return Math.pow((Math.pow((x - tempMouseX),2) + Math.pow((y - tempMouseY),2)),0.5);
-}
-
-// Constrain Distance
-function constrainDistance(distance){
-  if(distance > 30*windowWidth/numCirclesX/2){
-        return windowWidth/numCirclesX/2;
-      }
-  else {
-    return distance / 30;
   }
 }
