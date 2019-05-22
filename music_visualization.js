@@ -69,6 +69,7 @@ function windowResized() {
 }
 
 function songLoadedSuccessfully(){
+  resetSketch();
   console.log("loaded");
   songLoaded = true;
 }
