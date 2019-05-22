@@ -11,7 +11,8 @@ var spectrum;
 var waveform;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  var canvas = createCanvas(windowWidth, windowHeight);
+  canvas.drop(droppedFile);
   background(50);
 
   soundFormats('mp3', 'ogg','wav');
@@ -69,7 +70,6 @@ function windowResized() {
 
 function songLoadedSuccessfully(){
   //resetSketch();
-  console.log("loaded");
   songLoaded = true;
 }
 
@@ -180,7 +180,7 @@ function keyPressed() {
       currentSong = (currentSong + 1) % songs.length;
       songs[currentSong].play();
     }
-    if (key === 'ArrowUp'){
+    if (key === 'ArrowUp' || key === ' '){
       if (pausedMusic || !playingMusic) {
         songs[currentSong].play();
         pausedMusic = false;
@@ -196,6 +196,16 @@ function keyPressed() {
       playingMusic = false;
       pausedMusic = false;
       songs[currentSong].stop();
+    }
+    if (key == 'Backspace') {
+      if (songs[currentSong].isPlaying()) {
+        songs[currentSong].stop();
+      }
+      songs.splice(currentSong,1);
+      currentSong = (currentSong + 0) % songs.length;
+      if(playingMusic && !pausedMusic){
+        songs[currentSong].play();
+      }
     }
   }
 }
@@ -255,4 +265,12 @@ function constrainDistance(distance){
   else {
     return distance / 30;
   }
+}
+
+function droppedFile(file){
+  loadSound(file, songUploaded);
+}
+
+function songUploaded(song){
+  songs.push(song);
 }
