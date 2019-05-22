@@ -34,6 +34,8 @@ function setup() {
   songs.push(loadSound('assets/sounds/bensound-summer.mp3'));
   songs.push(loadSound('assets/sounds/bensound-sunny.mp3'));
   songs.push(loadSound('assets/sounds/bensound-ukulele.mp3'));
+
+  resetSketch();
 }
 
 function draw() {
@@ -67,7 +69,7 @@ function windowResized() {
 }
 
 function songLoadedSuccessfully(){
-  resetSketch();
+  //resetSketch();
   console.log("loaded");
   songLoaded = true;
 }
@@ -129,31 +131,41 @@ function drawWave() {
   strokeWeight(1);
 }
 
-function mouseClicked() {
-  if (pausedMusic || !playingMusic) {
-    songs[currentSong].play();
-    pausedMusic = false;
-    playingMusic = true;
-  }
-  else {
-    songs[currentSong].pause();
-    pausedMusic = true;
-    playingMusic = true;
-  }
-}
-
-function touchStarted() {
-  if (pausedMusic || !playingMusic) {
-    songs[currentSong].play();
-    pausedMusic = false;
-    playingMusic = true;
-  }
-  else {
-    songs[currentSong].pause();
-    pausedMusic = true;
-    playingMusic = true;
-  }
-}
+// function mouseClicked() {
+//   if (pausedMusic || !playingMusic) {
+//     songs[currentSong].play();
+//     pausedMusic = false;
+//     playingMusic = true;
+//   }
+//   else {
+//     songs[currentSong].pause();
+//     pausedMusic = true;
+//     playingMusic = true;
+//   }
+// }
+// 
+// function doubleClicked() {
+//   playingMusic = true;
+//   pausedMusic = false;
+//   if (songs[currentSong].isPlaying()) {
+//     songs[currentSong].stop();
+//   }
+//   currentSong = (currentSong + 1) % songs.length;
+//   songs[currentSong].play();
+// }
+//
+// function touchStarted() {
+//   if (pausedMusic || !playingMusic) {
+//     songs[currentSong].play();
+//     pausedMusic = false;
+//     playingMusic = true;
+//   }
+//   else {
+//     songs[currentSong].pause();
+//     pausedMusic = true;
+//     playingMusic = true;
+//   }
+// }
 
 function keyPressed() {
   if(songLoaded){
@@ -197,16 +209,6 @@ function keyPressed() {
       songs[currentSong].stop();
     }
   }
-}
-
-function doubleClicked() {
-  playingMusic = true;
-  pausedMusic = false;
-  if (songs[currentSong].isPlaying()) {
-    songs[currentSong].stop();
-  }
-  currentSong = (currentSong + 1) % songs.length;
-  songs[currentSong].play();
 }
 
 // function keyTyped(){
