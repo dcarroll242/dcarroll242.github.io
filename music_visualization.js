@@ -15,7 +15,7 @@ function setup() {
   background(50);
 
   soundFormats('mp3', 'ogg','wav');
-  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav'));
+  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav', songLoadedSuccessfully));
   songs.push(loadSound('assets/sounds/bensound-acousticbreeze.mp3'));
   songs.push(loadSound('assets/sounds/bensound-anewbeginning.mp3'));
   songs.push(loadSound('assets/sounds/bensound-creativeminds.mp3'));
@@ -59,7 +59,6 @@ function draw() {
   }
   else if(pausedMusic && songLoaded){
     background(0,0,0,25);
-    drawSpectrum();
     drawWave();
   }
 }
@@ -131,41 +130,32 @@ function drawWave() {
   strokeWeight(1);
 }
 
-// function mouseClicked() {
-//   if (pausedMusic || !playingMusic) {
-//     songs[currentSong].play();
-//     pausedMusic = false;
-//     playingMusic = true;
-//   }
-//   else {
-//     songs[currentSong].pause();
-//     pausedMusic = true;
-//     playingMusic = true;
-//   }
-// }
-// 
-// function doubleClicked() {
-//   playingMusic = true;
-//   pausedMusic = false;
-//   if (songs[currentSong].isPlaying()) {
-//     songs[currentSong].stop();
-//   }
-//   currentSong = (currentSong + 1) % songs.length;
-//   songs[currentSong].play();
-// }
-//
-// function touchStarted() {
-//   if (pausedMusic || !playingMusic) {
-//     songs[currentSong].play();
-//     pausedMusic = false;
-//     playingMusic = true;
-//   }
-//   else {
-//     songs[currentSong].pause();
-//     pausedMusic = true;
-//     playingMusic = true;
-//   }
-// }
+function mousePressed() {
+  if(songLoaded){
+    if (pausedMusic || !playingMusic) {
+      songs[currentSong].play();
+      pausedMusic = false;
+      playingMusic = true;
+    }
+    else {
+      songs[currentSong].pause();
+      pausedMusic = true;
+      playingMusic = true;
+    }
+  }
+}
+
+function doubleClicked() {
+  if(songLoaded){
+    playingMusic = true;
+    pausedMusic = false;
+    if (songs[currentSong].isPlaying()) {
+      songs[currentSong].stop();
+    }
+    currentSong = (currentSong + 1) % songs.length;
+    songs[currentSong].play();
+  }
+}
 
 function keyPressed() {
   if(songLoaded){
