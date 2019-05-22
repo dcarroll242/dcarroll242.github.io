@@ -69,6 +69,7 @@ function windowResized() {
 }
 
 function songLoadedSuccessfully(){
+  console.log("loaded");
   songLoaded = true;
 }
 
