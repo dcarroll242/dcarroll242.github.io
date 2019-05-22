@@ -57,6 +57,11 @@ function draw() {
       songs[currentSong].play();
     }
   }
+  else if(pausedMusic && songLoaded){
+    background(0,0,0,25);
+    drawSpectrum();
+    drawWave();
+  }
 }
 
 function windowResized() {
