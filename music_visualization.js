@@ -174,7 +174,9 @@ function keyPressed() {
     if (key === 'ArrowRight') {
       playingMusic = true;
       pausedMusic = false;
-      songs[currentSong].stop();
+      if (songs[currentSong].isPlaying()) {
+        songs[currentSong].stop();
+      }
       currentSong = (currentSong + 1) % songs.length;
       songs[currentSong].play();
     }
