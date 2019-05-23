@@ -3,12 +3,20 @@ let mic, recorder, soundFile;
 var numCirclesX = 20;
 var numCirclesY = 10;
 var songs = [];
+var songNames = [];
 var currentSong = 0;
 var playingMusic = false;
 var pausedMusic = false;
 var songLoaded = false;
 var spectrum;
 var waveform;
+var displayCircles = true;
+var displaySpectrum = true;
+var displayMiddle = true;
+var displayWaveform = true;
+var displayFileName = true;
+var textColorCounter = 0;
+var textColorDirection = 1;
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
@@ -16,61 +24,78 @@ function setup() {
   background(50);
 
   soundFormats('mp3', 'ogg','wav');
-  songs.push(loadSound('assets/sounds/liqwyd-summer-nights.wav', songLoadedSuccessfully));
-  songs.push(loadSound('assets/sounds/bensound-acousticbreeze.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-anewbeginning.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-creativeminds.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-cute.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-dubstep.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-endlessmotion.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-energy.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-epic.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-goinghigher.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-happyrock.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-inspire.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-perception.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-pianomoment.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-retrosoul.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-slowmotion.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-summer.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-sunny.mp3'));
-  songs.push(loadSound('assets/sounds/bensound-ukulele.mp3'));
+  loadSound('assets/sounds/liqwyd-summer-nights.wav', songUploaded);
+  loadSound('assets/sounds/bensound-acousticbreeze.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-anewbeginning.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-creativeminds.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-cute.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-dubstep.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-endlessmotion.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-energy.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-epic.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-goinghigher.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-happyrock.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-inspire.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-perception.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-pianomoment.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-retrosoul.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-slowmotion.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-summer.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-sunny.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-ukulele.mp3', songUploaded);
 
   resetSketch();
 }
 
 function draw() {
+  colorMode(RGB);
+  background(0,0,0,25);
   if(!pausedMusic && songLoaded){
-    colorMode(RGB);
-    drawCircles();
-    background(0,0,0,25);
-    var level = analyzer.getLevel();
-    var size = map(level, 0, 1, 0, 800);
-
-    fill(0,0,255);
-    ellipse(width/2, height/2, size, size);
-
-    drawSpectrum();
-    drawWave();
-
+    if(displayCircles){
+      colorMode(RGB);
+      drawCircles();
+    }
+    if(displayMiddle){
+      colorMode(RGB);
+      var level = analyzer.getLevel();
+      var size = map(level, 0, 1, 0, 800);
+      fill(0,0,255);
+      ellipse(width/2, height/2, size, size);
+    }
+    if(displaySpectrum){
+      colorMode(HSB);
+      drawSpectrum();
+    }
+    if(displayWaveform){
+      colorMode(RGB);
+      drawWave();
+    }
+    if(displayFileName){
+      colorMode(RGB);
+      fill(textColorCounter, textColorCounter);
+      stroke(textColorCounter, textColorCounter);
+      textSize(24);
+      strokeWeight(1);
+      textAlign(CENTER);
+      text(songNames[currentSong], windowWidth/2, 25);
+      textColorCounter += 3*textColorDirection;
+      if(textColorCounter <= 0 || textColorCounter >= 500){textColorDirection *= -1;}
+    }
     if(playingMusic && !songs[currentSong].isPlaying()){
       currentSong = (currentSong + 1) % songs.length;
       songs[currentSong].play();
     }
   }
   else if(pausedMusic && songLoaded){
-    background(0,0,0,25);
-    drawWave();
+    if(displayWaveform){
+      colorMode(RGB);
+      drawWave();
+    }
   }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-}
-
-function songLoadedSuccessfully(){
-  //resetSketch();
-  songLoaded = true;
 }
 
 function resetSketch() {
@@ -99,7 +124,6 @@ function drawSpectrum() {
     spectrum = fft.analyze();
   }
   noStroke();
-  colorMode(HSB);
   fill(0,255,0); // spectrum is green
   colorCounter = 0;
   for (var i = 0; i< spectrum.length; i++){
@@ -113,7 +137,6 @@ function drawSpectrum() {
 }
 
 function drawWave() {
-  colorMode(RGB);
   if(!pausedMusic){
     waveform = fft.waveform();
   }
@@ -198,14 +221,37 @@ function keyPressed() {
       songs[currentSong].stop();
     }
     if (key == 'Backspace') {
-      if (songs[currentSong].isPlaying()) {
-        songs[currentSong].stop();
+      if(songs.length > 1){
+        if (songs[currentSong].isPlaying()) {
+          songs[currentSong].stop();
+        }
+        songs.splice(currentSong, 1);
+        songNames.splice(currentSong, 1);
+        currentSong = (currentSong + 0) % songs.length;
+        if(playingMusic && !pausedMusic){
+          songs[currentSong].play();
+        }
       }
-      songs.splice(currentSong,1);
-      currentSong = (currentSong + 0) % songs.length;
-      if(playingMusic && !pausedMusic){
-        songs[currentSong].play();
-      }
+    }
+    if(key == 'z'){
+      if(displaySpectrum){displaySpectrum = false;}
+      else{displaySpectrum = true;}
+    }
+    if(key == 'x'){
+      if(displayWaveform){displayWaveform = false;}
+      else{displayWaveform = true;}
+    }
+    if(key == 'c'){
+      if(displayCircles){displayCircles = false;}
+      else{displayCircles = true;}
+    }
+    if(key == 'v'){
+      if(displayFileName){displayFileName = false;}
+      else{displayFileName = true;}
+    }
+    if(key == 'b'){
+      if(displayMiddle){displayMiddle = false;}
+      else{displayMiddle = true;}
     }
   }
 }
@@ -268,9 +314,18 @@ function constrainDistance(distance){
 }
 
 function droppedFile(file){
-  loadSound(file, songUploaded);
+  loadSound(file, customSongUploaded);
 }
 
 function songUploaded(song){
   songs.push(song);
+  songNames.push(song.file);
+  console.log(song.file);
+  songLoaded = true;
+}
+
+function customSongUploaded(song){
+  songs.push(song);
+  songNames.push(song.file.name);
+  console.log(song.file.name);
 }
