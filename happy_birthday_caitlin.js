@@ -10,6 +10,7 @@ var bdaySong;
 var songLoaded = false;
 var pause = false;
 var luciana;
+var showKey = false;
 
 function preload(){
   // Load Images
@@ -45,12 +46,34 @@ function draw() {
     drawLuciana();
     drawSignature();
     drawMessage();
+    if(showKey){drawKey();}
+    else{drawSmallKey();}
     drawHappyBirthday();
   }
 }
 
 function drawLuciana() {
   image(luciana, 0, windowHeight - luciana.height);
+}
+
+function drawKey(){
+  textSize(30);
+  textAlign(LEFT);
+  textStyle(NORMAL);
+  fill(100, 0, 0);
+  text("Press [k] to show/hide this key.", 10, 30);
+  textSize(20);
+  text("Happy Birthday: Click Anywhere (except Luciana)", 10, 60);
+  text("Luciana Message: Click Luciana", 10, 90);
+  text("Stop Current Sound: Spacebar", 10, 120);
+}
+
+function drawSmallKey(){
+  textSize(14);
+  textAlign(LEFT);
+  textStyle(ITALIC);
+  fill(100, 100, 100);
+  text("Show Key [k]", 4, 14);
 }
 
 function drawBalloons() {
@@ -69,14 +92,16 @@ function drawBalloons() {
 function drawHappyBirthday() {
   textSize(102);
   textAlign(CENTER);
+  textStyle(NORMAL);
   fill(0, 0, 0);
-  text("Happy Birthday", mouseX, mouseY - 75);
-  text("Caitlin!!!", mouseX, mouseY + 75);
+  text("Happy Birthday", mouseX, mouseY - 40);
+  text("Caitlin!!!", mouseX, mouseY + 100);
 }
 
 function drawSignature(){
   textSize(40);
   textAlign(LEFT);
+  textStyle(NORMAL);
   fill(0, 0, 0);
   text("Love,", windowWidth/2-200, windowHeight - 110);
   text("DJ, Ingrid, Luciana, & Grandpa", windowWidth/2-200+50, windowHeight - 50);
@@ -85,6 +110,7 @@ function drawSignature(){
 function drawMessage(){
   textSize(40);
   textAlign(LEFT);
+  textStyle(NORMAL);
   fill(0, 0, 0);
   text("Have a wonderful birthday Caitlin!", windowWidth/2-220, windowHeight/2 + 100);
   text("You deserve it & we love you so much!", windowWidth/2-220, windowHeight/2 + 150);
@@ -109,6 +135,10 @@ function keyPressed(){
   if(keyCode == 32) {
     bdaySong.stop();
     lucianaSong.stop();
+  }
+  if(keyCode == 75){
+    if(showKey){showKey = false;}
+    else{showKey = true;}
   }
 }
 
