@@ -104,7 +104,7 @@ function drawHappyBirthday() {
 
 function drawSignature(){
   let anchorX = -700;
-  let anchorY = -100;
+  let anchorY = -120;
   textSize(40);
   textAlign(LEFT);
   textStyle(NORMAL);
