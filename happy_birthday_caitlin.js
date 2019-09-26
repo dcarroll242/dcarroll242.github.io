@@ -11,6 +11,7 @@ var songLoaded = false;
 var pause = false;
 var luciana;
 var showKey = false;
+var speed = .6;
 
 function preload(){
   // Load Images
@@ -67,7 +68,8 @@ function drawKey(){
   textSize(20);
   text("Happy Birthday: Click Anywhere (except Luciana)", 10, 60);
   text("Luciana Message: Click on Luciana", 10, 90);
-  text("Stop Current Sound: Press Spacebar", 10, 120);
+  text("Stop Current Sound: Click Mouse or Press Spacebar", 10, 120);
+  text("Balloons Speed: Up/Down Arrows", 10, 150);
 }
 
 function drawSmallKey(){
@@ -84,7 +86,7 @@ function drawBalloons() {
     image(balloons[i][3], balloons[i][0], balloons[i][1], balloons[i][2], balloons[i][2])
     //calls images
     balloons[i][0] += 1* Math.sin(balloons[i][2]/5 + angle);
-    balloons[i][1] += -1*balloons[i][2]/10;
+    balloons[i][1] += speed*-1*balloons[i][2]/10;
     if(balloons[i][1] <= -50){
       balloons[i][1] = windowHeight + 50;
     }
@@ -131,7 +133,11 @@ function songUploaded(song){
 }
 
 function mousePressed() {
-  if(mouseX < luciana.width && mouseY > windowHeight-luciana.height) {
+  if(lucianaSong.isPlaying() || bdaySong.isPlaying()){
+    bdaySong.stop();
+    lucianaSong.stop();
+  }
+  else if(mouseX < luciana.width && mouseY > windowHeight-luciana.height) {
     if(!lucianaSong.isPlaying() && !bdaySong.isPlaying()){
       lucianaSong.play();
     }
@@ -146,9 +152,15 @@ function keyPressed(){
     bdaySong.stop();
     lucianaSong.stop();
   }
-  if(keyCode == 75){
+  if(keyCode == 75) {
     if(showKey){showKey = false;}
     else{showKey = true;}
+  }
+  if(keyCode == 38) {
+    speed += .1;
+  }
+  if(keyCode == 40) {
+    speed -= .1;
   }
 }
 
