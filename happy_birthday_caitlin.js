@@ -44,6 +44,7 @@ function draw() {
     drawBalloons();
     drawLuciana();
     drawSignature();
+    drawMessage();
     drawHappyBirthday();
   }
 }
@@ -69,8 +70,6 @@ function drawHappyBirthday() {
   textSize(102);
   textAlign(CENTER);
   fill(0, 0, 0);
-  // text("Happy Birthday", windowWidth/2, windowHeight/2 - 75);
-  // text("Caitlin!!!", windowWidth/2, windowHeight/2 + 75);
   text("Happy Birthday", mouseX, mouseY - 75);
   text("Caitlin!!!", mouseX, mouseY + 75);
 }
@@ -79,10 +78,16 @@ function drawSignature(){
   textSize(40);
   textAlign(LEFT);
   fill(0, 0, 0);
-  // text("Happy Birthday", windowWidth/2, windowHeight/2 - 75);
-  // text("Caitlin!!!", windowWidth/2, windowHeight/2 + 75);
-  text("We Love You!!!", windowWidth/2-200, windowHeight - 110);
+  text("Love,", windowWidth/2-200, windowHeight - 110);
   text("DJ, Ingrid, Luciana, & Grandpa", windowWidth/2-200+50, windowHeight - 50);
+}
+
+function drawMessage(){
+  textSize(40);
+  textAlign(LEFT);
+  fill(0, 0, 0);
+  text("Have a wonderful birthday Caitlin!", windowWidth/2-220, windowHeight/2 + 100);
+  text("You deserve it & we love you so much!", windowWidth/2-220, windowHeight/2 + 150);
 }
 
 function songUploaded(song){
@@ -97,6 +102,13 @@ function mousePressed() {
   }
   else if(songLoaded && !bdaySong.isPlaying() && !lucianaSong.isPlaying()) {
     bdaySong.play();
+  }
+}
+
+function keyPressed(){
+  if(keyCode == 32) {
+    bdaySong.stop();
+    lucianaSong.stop();
   }
 }
 
