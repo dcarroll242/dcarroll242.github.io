@@ -133,7 +133,11 @@ function songUploaded(song){
 }
 
 function mousePressed() {
-  if(lucianaSong.isPlaying() || bdaySong.isPlaying()){
+  if(mouseX < 80 && mouseY < 40) {
+    if(showKey){showKey = false;}
+    else{showKey = true;}
+  }
+  else if(lucianaSong.isPlaying() || bdaySong.isPlaying()){
     bdaySong.stop();
     lucianaSong.stop();
   }
