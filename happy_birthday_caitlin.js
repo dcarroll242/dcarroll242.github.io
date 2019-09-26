@@ -87,8 +87,8 @@ function drawBalloons() {
     //calls images
     balloons[i][0] += 1* Math.sin(balloons[i][2]/5 + angle);
     balloons[i][1] += speed*-1*balloons[i][2]/10;
-    if(balloons[i][1] <= -50){
-      balloons[i][1] = windowHeight + 50;
+    if(balloons[i][1] <= -100){
+      balloons[i][1] = windowHeight + 100;
     }
     angle += .0001;
   }
