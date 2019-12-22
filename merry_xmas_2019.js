@@ -20,6 +20,7 @@ let initialClick = false;
 let playButton;
 
 function preload(){
+  soundFormats('mp3');
   lucianaSound = loadSound("assets/sounds/Luciana - Merry Christmas.mp3");
   djSound = loadSound("assets/sounds/DJ - Merry Christmas2.mp3");
   ingridSound = loadSound("assets/sounds/Ingrid - Merry Christmas.mp3");
@@ -171,5 +172,4 @@ function mousePressed() {
     djSound.play();
   }
   initialClick = true;
-
 }
