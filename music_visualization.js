@@ -10,7 +10,7 @@ var pausedMusic = false;
 var songLoaded = false;
 var spectrum;
 var waveform;
-var displayCircles = true;
+var displayCircles = false;
 var displaySpectrum = true;
 var displayMiddle = true;
 var displayWaveform = true;
