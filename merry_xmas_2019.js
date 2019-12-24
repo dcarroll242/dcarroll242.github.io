@@ -32,6 +32,12 @@ function setup() {
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
+
+  createCanvas(windowWidth, windowHeight);
+  fitBackground();
+  fill(15);
+  noStroke();
+  createSnowFlakes();
 }
 
 function draw() {
@@ -149,13 +155,6 @@ function showFonts() {
 
 function song1Loaded() {
   allAssetsLoaded = true;
-
-  // Previously in setup()
-  createCanvas(windowWidth, windowHeight);
-  fitBackground();
-  fill(15);
-  noStroke();
-  createSnowFlakes();
 }
 
 function song1Failed() {
