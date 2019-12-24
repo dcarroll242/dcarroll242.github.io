@@ -204,6 +204,7 @@ function touchStarted() {
     }
     initialClick = true;
   }
+  return false;
 }
 
 function checkAssetsLoaded() {
