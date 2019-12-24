@@ -20,7 +20,7 @@ let allAssetsLoaded = false;
 let initialClick = false;
 let playButton;
 
-function preload(){
+function setup() {
   soundFormats('mp3');
   lucianaSound = loadSound("assets/sounds/Luciana - Merry Christmas.mp3");
   djSound = loadSound("assets/sounds/DJ - Merry Christmas2.mp3");
@@ -32,10 +32,6 @@ function preload(){
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
-}
-
-function setup() {
-
 }
 
 function draw() {
