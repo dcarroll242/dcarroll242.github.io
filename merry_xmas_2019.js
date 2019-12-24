@@ -35,11 +35,12 @@ function setup() {
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
 
-  createSnowFlakes();
   fitBackground();
+  createSnowFlakes();
 }
 
 function draw() {
+  noStroke();
   imageMode(CENTER);
   background(0);
   fitBackground();
@@ -113,7 +114,6 @@ function fitBackground() {
   let windowAR = windowWidth / windowHeight;
   let imageAR = bkgd.width / bkgd.height;
 
-  imageMode(CENTER);
   if(windowAR > imageAR) {
     bkgd.width = windowHeight * imageAR;
     bkgd.height = windowHeight;
@@ -122,7 +122,6 @@ function fitBackground() {
     bkgd.width = windowWidth;
     bkgd.height = windowWidth / imageAR;
   }
-
 }
 
 function showFonts() {
@@ -165,54 +164,28 @@ function song1Loading() {
 function mousePressed() {
   if(allAssetsLoaded) {
     if(initialClick) {
-      if(mouseX < windowWidth/3) {
-        if(!ingridSound.isPlaying()){ingridSound.play();}
+      if(mouseY < windowHeight*7/20) {
+        ingridSound.play();
+        lucianaSound.play();
+        djSound.play();
       }
-      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {
-        if(!lucianaSound.isPlaying()){lucianaSound.play();}
-      }
-      if(mouseX > windowWidth*2/3) {
-        if(!djSound.isPlaying()){djSound.play();}
-      }
-    }
-    else {
-      if(!ingridSound.isPlaying()){ingridSound.play();}
-      if(!lucianaSound.isPlaying()){lucianaSound.play();}
-      if(!djSound.isPlaying()){djSound.play();}
-    }
-    initialClick = true;
-  }
-}
-
-function touchStarted() {
-  if(allAssetsLoaded) {
-    if(initialClick) {
-      if(mouseX < windowWidth/3) {
-        if(!ingridSound.isPlaying()){ingridSound.play();}
-      }
-      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {
-        if(!lucianaSound.isPlaying()){lucianaSound.play();}
-      }
-      if(mouseX > windowWidth*2/3) {
-        if(!djSound.isPlaying()){djSound.play();}
+      else {
+        if(mouseX < windowWidth*45/100) {
+          ingridSound.play();
+        }
+        if(mouseX >= windowWidth*45/100 && mouseX <= windowWidth*55/100) {
+          lucianaSound.play();
+        }
+        if(mouseX > windowWidth*55/100) {
+          djSound.play();
+        }
       }
     }
     else {
-      if(!ingridSound.isPlaying()){ingridSound.play();}
-      if(!lucianaSound.isPlaying()){lucianaSound.play();}
-      if(!djSound.isPlaying()){djSound.play();}
+      ingridSound.play();
+      lucianaSound.play();
+      djSound.play();
     }
     initialClick = true;
   }
-  return false;
-}
-
-function deviceTurned() {
-  resizeCanvas(windowWidth, windowHeight);
-  fitBackground();
-  createSnowFlakes();
-}
-
-function checkAssetsLoaded() {
-
 }
