@@ -207,6 +207,12 @@ function touchStarted() {
   return false;
 }
 
+function deviceTurned() {
+  resizeCanvas(windowWidth, windowHeight);
+  fitBackground();
+  createSnowFlakes();
+}
+
 function checkAssetsLoaded() {
 
 }
