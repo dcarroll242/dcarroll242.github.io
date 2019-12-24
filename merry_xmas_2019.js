@@ -35,9 +35,6 @@ function setup() {
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
 
-
-  // fill(15);
-  // noStroke();
   createSnowFlakes();
   fitBackground();
 }
@@ -166,17 +163,19 @@ function song1Loading() {
 }
 
 function mousePressed() {
-  if(initialClick) {
-    if(mouseX < windowWidth/3) {ingridSound.play();}
-    if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {lucianaSound.play();}
-    if(mouseX > windowWidth*2/3) {djSound.play();}
+  if(allAssetsLoaded) {
+    if(initialClick) {
+      if(mouseX < windowWidth/3) {ingridSound.play();}
+      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {lucianaSound.play();}
+      if(mouseX > windowWidth*2/3) {djSound.play();}
+    }
+    else {
+      ingridSound.play();
+      lucianaSound.play();
+      djSound.play();
+    }
+    initialClick = true;
   }
-  else {
-    ingridSound.play();
-    lucianaSound.play();
-    djSound.play();
-  }
-  initialClick = true;
 }
 
 function checkAssetsLoaded() {
