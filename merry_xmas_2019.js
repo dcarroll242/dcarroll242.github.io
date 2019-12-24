@@ -169,16 +169,16 @@ function mousePressed() {
         if(!ingridSound.isPlaying()){ingridSound.play();}
       }
       if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {
-        lucianaSound.play();
+        if(!lucianaSound.isPlaying()){lucianaSound.play();}
       }
       if(mouseX > windowWidth*2/3) {
-        djSound.play();
+        if(!djSound.isPlaying()){djSound.play();}
       }
     }
     else {
       if(!ingridSound.isPlaying()){ingridSound.play();}
-      lucianaSound.play();
-      djSound.play();
+      if(!lucianaSound.isPlaying()){lucianaSound.play();}
+      if(!djSound.isPlaying()){djSound.play();}
     }
     initialClick = true;
   }
