@@ -184,6 +184,28 @@ function mousePressed() {
   }
 }
 
+function touchStarted() {
+  if(allAssetsLoaded) {
+    if(initialClick) {
+      if(mouseX < windowWidth/3) {
+        if(!ingridSound.isPlaying()){ingridSound.play();}
+      }
+      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {
+        if(!lucianaSound.isPlaying()){lucianaSound.play();}
+      }
+      if(mouseX > windowWidth*2/3) {
+        if(!djSound.isPlaying()){djSound.play();}
+      }
+    }
+    else {
+      if(!ingridSound.isPlaying()){ingridSound.play();}
+      if(!lucianaSound.isPlaying()){lucianaSound.play();}
+      if(!djSound.isPlaying()){djSound.play();}
+    }
+    initialClick = true;
+  }
+}
+
 function checkAssetsLoaded() {
 
 }
