@@ -165,12 +165,18 @@ function song1Loading() {
 function mousePressed() {
   if(allAssetsLoaded) {
     if(initialClick) {
-      if(mouseX < windowWidth/3) {ingridSound.play();}
-      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {lucianaSound.play();}
-      if(mouseX > windowWidth*2/3) {djSound.play();}
+      if(mouseX < windowWidth/3) {
+        if(!ingridSound.isPlaying()){ingridSound.play();}
+      }
+      if(mouseX >= windowWidth/3 && mouseX <= windowWidth*2/3) {
+        lucianaSound.play();
+      }
+      if(mouseX > windowWidth*2/3) {
+        djSound.play();
+      }
     }
     else {
-      ingridSound.play();
+      if(!ingridSound.isPlaying()){ingridSound.play();}
       lucianaSound.play();
       djSound.play();
     }
