@@ -22,10 +22,6 @@ let playButton;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  fitBackground();
-  fill(15);
-  noStroke();
-  createSnowFlakes();
 
   soundFormats('mp3');
   song1 = loadSound("assets/sounds/oh-christmas-tree.mp3", song1Loaded, song1Failed, song1Loading);
@@ -38,11 +34,18 @@ function setup() {
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
+
+
+  // fill(15);
+  // noStroke();
+  createSnowFlakes();
+  fitBackground();
 }
 
 function draw() {
   imageMode(CENTER);
   background(0);
+  fitBackground();
   image(bkgd, windowWidth/2, windowHeight/2);
   drawMerryXmas();
   drawSnowFlakes();
