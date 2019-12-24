@@ -11,6 +11,7 @@ let wind = 1;
 let windAuto = 0;
 let pNoise = 0;
 let pNoiseDx = .01;
+let sounds = [];
 let song1;
 let lucianaSound;
 let djSound;
@@ -38,23 +39,26 @@ function setup() {
 }
 
 function draw() {
+  if(allAssetsLoaded) {
+    if(initialClick) {
+      if(!song1.isPlaying()) {
+        song1.play();
+      }
 
-  if(initialClick && allAssetsLoaded) {
-    if(!song1.isPlaying()) {
-      song1.play();
+      // Moved inside if (previously at beginning of draw())
+      imageMode(CENTER);
+      background(0);
+      image(bkgd, windowWidth/2, windowHeight/2);
+      drawMerryXmas();
+      drawSnowFlakes();
     }
+    else {
+      imageMode(CENTER);
+      image(playButton, windowWidth/2, windowHeight/2, windowWidth/3, windowWidth/3);
+    }
+  }
 
-    // Moved inside if (previously at beginning of draw())
-    imageMode(CENTER);
-    background(0);
-    image(bkgd, windowWidth/2, windowHeight/2);
-    drawMerryXmas();
-    drawSnowFlakes();
-  }
-  else {
-    imageMode(CENTER);
-    image(playButton, windowWidth/2, windowHeight/2, windowWidth/3, windowWidth/3);
-  }
+
 }
 
 function drawSnowFlakes() {
@@ -152,9 +156,9 @@ function song1Loaded() {
 
   // Previously in setup()
   createCanvas(windowWidth, windowHeight);
+  fitBackground();
   fill(15);
   noStroke();
-  fitBackground();
   createSnowFlakes();
 }
 
@@ -178,4 +182,8 @@ function mousePressed() {
     djSound.play();
   }
   initialClick = true;
+}
+
+function checkAssetsLoaded() {
+
 }
