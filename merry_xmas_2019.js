@@ -34,23 +34,22 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  fill(15);
-  noStroke();
-  fitBackground();
-  createSnowFlakes();
+
 }
 
 function draw() {
-  imageMode(CENTER);
-  background(0);
-  image(bkgd, windowWidth/2, windowHeight/2);
-  drawMerryXmas();
-  drawSnowFlakes();
+
   if(initialClick && allAssetsLoaded) {
     if(!song1.isPlaying()) {
       song1.play();
     }
+
+    // Moved inside if (previously at beginning of draw())
+    imageMode(CENTER);
+    background(0);
+    image(bkgd, windowWidth/2, windowHeight/2);
+    drawMerryXmas();
+    drawSnowFlakes();
   }
   else {
     imageMode(CENTER);
@@ -150,6 +149,13 @@ function showFonts() {
 
 function song1Loaded() {
   allAssetsLoaded = true;
+
+  // Previously in setup()
+  createCanvas(windowWidth, windowHeight);
+  fill(15);
+  noStroke();
+  fitBackground();
+  createSnowFlakes();
 }
 
 function song1Failed() {
