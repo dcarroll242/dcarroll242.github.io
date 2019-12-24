@@ -21,6 +21,12 @@ let initialClick = false;
 let playButton;
 
 function setup() {
+  createCanvas(windowWidth, windowHeight);
+  fitBackground();
+  fill(15);
+  noStroke();
+  createSnowFlakes();
+
   soundFormats('mp3');
   song1 = loadSound("assets/sounds/oh-christmas-tree.mp3", song1Loaded, song1Failed, song1Loading);
   lucianaSound = loadSound("assets/sounds/Luciana - Merry Christmas.mp3");
@@ -32,12 +38,6 @@ function setup() {
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
   snowflakeImages.push("assets/images/snowflake.png");
-
-  createCanvas(windowWidth, windowHeight);
-  fitBackground();
-  fill(15);
-  noStroke();
-  createSnowFlakes();
 }
 
 function draw() {
@@ -58,8 +58,6 @@ function draw() {
       image(playButton, windowWidth/2, windowHeight/2, windowWidth/3, windowWidth/3);
     }
   }
-
-
 }
 
 function drawSnowFlakes() {
