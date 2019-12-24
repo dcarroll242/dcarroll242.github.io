@@ -22,10 +22,10 @@ let playButton;
 
 function setup() {
   soundFormats('mp3');
+  song1 = loadSound("assets/sounds/oh-christmas-tree.mp3", song1Loaded, song1Failed, song1Loading);
   lucianaSound = loadSound("assets/sounds/Luciana - Merry Christmas.mp3");
   djSound = loadSound("assets/sounds/DJ - Merry Christmas2.mp3");
   ingridSound = loadSound("assets/sounds/Ingrid - Merry Christmas.mp3");
-  song1 = loadSound("assets/sounds/oh-christmas-tree.mp3", song1Loaded, song1Failed, song1Loading);
   //bkgd = loadImage("assets/images/xmas_background.jpeg", windowWidth, windowHeight);
   bkgd = loadImage("assets/images/Carrolls_Xmas.png", windowWidth, windowHeight);
   playButton = loadImage("assets/images/playButton2.png");
@@ -41,18 +41,17 @@ function setup() {
 }
 
 function draw() {
+  imageMode(CENTER);
+  background(0);
+  image(bkgd, windowWidth/2, windowHeight/2);
+  drawMerryXmas();
+  drawSnowFlakes();
+
   if(allAssetsLoaded) {
     if(initialClick) {
       if(!song1.isPlaying()) {
         song1.play();
       }
-
-      // Moved inside if (previously at beginning of draw())
-      imageMode(CENTER);
-      background(0);
-      image(bkgd, windowWidth/2, windowHeight/2);
-      drawMerryXmas();
-      drawSnowFlakes();
     }
     else {
       imageMode(CENTER);
