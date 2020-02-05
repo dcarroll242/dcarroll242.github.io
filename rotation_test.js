@@ -1,9 +1,9 @@
 function setup() {
-  createCanvas(400, 400, WEBGL);
+  createCanvas(windowWidth, windowHeight, WEBGL);
 }
 
 function draw() {
-  background(200);
+  background(0);
   rotateZ(radians(rotationZ));
   rotateX(radians(rotationX));
   rotateY(radians(rotationY));
@@ -12,4 +12,8 @@ function draw() {
   rotateX(radians(360*mouseY/width));
 
   box(200, 200, 200);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
