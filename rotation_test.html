@@ -7,6 +7,15 @@
 
   </head>
   <body>
+    <h1 id="display">(0,0,0)</h1>
+    <script type="text/javascript">
+    window.addEventListener("deviceorientation", function(event) {
+      alpha = event.alpha;
+      beta = event.beta;
+      gamma = event.gamma;
+      document.getElementById("display").innerHTML = "(" + alpha + "," + beta + "," + gamma + ")";
+    }, true);
+    </script>
     <script src="rotation_test.js"></script>
 
 
