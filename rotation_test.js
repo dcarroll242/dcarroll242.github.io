@@ -7,5 +7,9 @@ function draw() {
   rotateZ(radians(rotationZ));
   rotateX(radians(rotationX));
   rotateY(radians(rotationY));
+
+  rotateZ(radians(360*mouseX/width));
+  rotateX(radians(360*mouseY/width));
+
   box(200, 200, 200);
 }
