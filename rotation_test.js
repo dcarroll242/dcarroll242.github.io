@@ -21,7 +21,7 @@ function setup() {
 }
 
 function draw() {
-  background(100);
+  background(0);
 
   text("(" + alpha + "," + beta + "," + gamma + ")", 0, -250, 0);
 
