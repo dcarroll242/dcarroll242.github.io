@@ -15,8 +15,17 @@ var displaySpectrum = true;
 var displayMiddle = true;
 var displayWaveform = true;
 var displayFileName = true;
+var displaySplitWave = false;
 var textColorCounter = 0;
 var textColorDirection = 1;
+let splitButton = false;
+let averageSpec = [];
+let averageAmp = [];
+let channels = 32;
+let spectrumSplitWaves;
+let micOn = false;
+let baseFreq = 2;
+let maxAmp = .66;
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
@@ -24,27 +33,7 @@ function setup() {
   background(50);
 
   soundFormats('mp3', 'ogg','wav');
-  loadSound('assets/sounds/liqwyd-summer-nights.wav', songUploaded);
-  loadSound('assets/sounds/bensound-acousticbreeze.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-anewbeginning.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-creativeminds.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-cute.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-dubstep.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-endlessmotion.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-energy.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-epic.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-goinghigher.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-happyrock.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-inspire.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-perception.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-pianomoment.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-retrosoul.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-slowmotion.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-summer.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-sunny.mp3', songUploaded);
-  loadSound('assets/sounds/bensound-ukulele.mp3', songUploaded);
-
-  resetSketch();
+  loadSound('assets/sounds/bensound-perception.mp3', firstSongUploaded);
 }
 
 function draw() {
@@ -70,6 +59,10 @@ function draw() {
       colorMode(RGB);
       drawWave();
     }
+    if(displaySplitWave) {
+      colorMode(RGB);
+      drawSplitWaves();
+    }
     if(displayFileName){
       colorMode(RGB);
       fill(textColorCounter, textColorCounter);
@@ -87,10 +80,25 @@ function draw() {
     }
   }
   else if(pausedMusic && songLoaded){
-    if(displayWaveform){
-      colorMode(RGB);
-      drawWave();
+    if(keyIsDown(83)) {
+      drawSplitWaves();
     }
+    else {
+      if(displaySplitWave) {
+        drawSplitWaves();
+      }
+      if(displayWaveform) {
+        drawWave();
+      }
+    }
+  }
+  if(keyIsDown(186)){
+    maxAmp -= .02;
+    if(maxAmp < 0){maxAmp = 0;}
+  }
+  if(keyIsDown(222)){
+    maxAmp += .02;
+    if(maxAmp > 2){maxAmp = 2;}
   }
 }
 
@@ -101,22 +109,18 @@ function windowResized() {
 function resetSketch() {
   // create a new Amplitude analyzer
   analyzer = new p5.Amplitude();
-  // create an audio in
-  // mic = new p5.AudioIn();
-  // // users must manually enable their browser microphone for recording to work properly!
-  // mic.start();
-  // // create a sound recorder
-  // recorder = new p5.SoundRecorder();
-  // // connect the mic to the recorder
-  // recorder.setInput(mic);
-  // // create an empty sound file that we will use to playback the recording
-  // soundFile = new p5.SoundFile();
-  // Patch the input to an volume analyzer
+  // Patch the input to a volume analyzer
   analyzer.setInput();
   // Setup fast Fourier Transform
   fft = new p5.FFT();
+  fft2 = new p5.FFT(0, channels);
+  fft2.setInput();
   // Set Input to microphone
   fft.setInput();
+
+  waveform = fft.waveform();
+  spectrum = fft.analyze();
+  spectrumSplitWaves = fft2.analyze();
 }
 
 function drawSpectrum() {
@@ -124,15 +128,19 @@ function drawSpectrum() {
     spectrum = fft.analyze();
   }
   noStroke();
-  fill(0,255,0); // spectrum is green
-  colorCounter = 0;
-  for (var i = 0; i< spectrum.length; i++){
+  for (var i = 0; i < spectrum.length; i++){
     fill(map(i, 0, 1024, 255, 0), 255, 255);
     var x = map(i, 0, spectrum.length, 0, width/2);
     var h = -height + map(spectrum[i], 0, 255, height, 0);
-    rect(x, height, width / spectrum.length, h );
-    rect(width-x, height, width / spectrum.length, h );
-    colorCounter++;
+    rect(x, height, width / spectrum.length, h/2 );
+    rect(width-x, height, width / spectrum.length, h/2 );
+  }
+  for (var i = 0; i < spectrum.length; i++){
+    fill(map(i, 0, 1024, 255, 0), 255, 255);
+    var x = map(i, 0, spectrum.length, 0, width/2);
+    var h = map(spectrum[i], 0, 255, 0, height);
+    rect(x, 0, width / spectrum.length, h/2 );
+    rect(width-x, 0, width / spectrum.length, h/2 );
   }
 }
 
@@ -144,13 +152,42 @@ function drawWave() {
   beginShape();
   stroke(255,255,0); // waveform is yellow
   strokeWeight(3);
-  for (var i = 0; i< waveform.length; i++){
+  for (var i = 0; i < waveform.length; i++){
     var x = map(i, 0, waveform.length, 0, width);
     var y = map( waveform[i], -1, 1, 0, height);
     vertex(x,y);
   }
   endShape();
   strokeWeight(1);
+}
+
+function drawSplitWaves() {
+  if(songLoaded) {
+    if(!pausedMusic) {
+      spectrumSplitWaves = fft2.analyze();
+    }
+    colorMode(RGB);
+    noFill();
+    stroke(255);
+    strokeWeight(64 / spectrumSplitWaves.length);
+    let r = 0;
+    let g = 0;
+    let b = 255;
+
+    for(let i = 0; i < spectrumSplitWaves.length; i++) {
+      colorChange = spectrumSplitWaves[i]
+      stroke(r, g + colorChange, b - colorChange);
+      beginShape();
+      for(let x = 0; x < width; x++) {
+        let amplitude = (spectrumSplitWaves[i]/256) * height/spectrumSplitWaves.length * (maxAmp);
+        let period = (spectrumSplitWaves.length - i) * (width / spectrumSplitWaves.length)/baseFreq;
+        let b = 2 * Math.PI / period;
+        vertex(x, amplitude * Math.sin(b * x) + (i+.5)*height/spectrumSplitWaves.length);
+      }
+      endShape();
+    }
+    strokeWeight(1);
+  }
 }
 
 function mousePressed() {
@@ -182,7 +219,7 @@ function doubleClicked() {
 
 function keyPressed() {
   if(songLoaded){
-    if (key === 'ArrowLeft') {
+    if (key === 'ArrowLeft' && !micOn) {
       playingMusic = true;
       pausedMusic = false;
       if (songs[currentSong].isPlaying()) {
@@ -194,7 +231,7 @@ function keyPressed() {
       }
       songs[currentSong].play();
     }
-    if (key === 'ArrowRight') {
+    if (key === 'ArrowRight' && !micOn) {
       playingMusic = true;
       pausedMusic = false;
       if (songs[currentSong].isPlaying()) {
@@ -203,7 +240,11 @@ function keyPressed() {
       currentSong = (currentSong + 1) % songs.length;
       songs[currentSong].play();
     }
-    if (key === 'ArrowUp' || key === ' '){
+    if ((key === 'ArrowUp' || key === ' ') && !micOn){
+      waveform = fft.waveform();
+      spectrum = fft.analyze();
+      spectrumSplitWaves = fft2.analyze();
+
       if (pausedMusic || !playingMusic) {
         songs[currentSong].play();
         pausedMusic = false;
@@ -215,12 +256,12 @@ function keyPressed() {
         playingMusic = true;
       }
     }
-    if (key == 'ArrowDown') {
+    if (key == 'ArrowDown' && !micOn) {
       playingMusic = false;
       pausedMusic = false;
       songs[currentSong].stop();
     }
-    if (key == 'Backspace') {
+    if (key == 'Backspace' && !micOn) {
       if(songs.length > 1){
         if (songs[currentSong].isPlaying()) {
           songs[currentSong].stop();
@@ -253,31 +294,73 @@ function keyPressed() {
       if(displayMiddle){displayMiddle = false;}
       else{displayMiddle = true;}
     }
+    if(key == 'n'){
+      if(displaySplitWave){displaySplitWave = false;}
+      else{displaySplitWave = true;}
+    }
+    if(key == 'm'){
+      if(!micOn){
+        micOn = true;
+        songs[currentSong].pause();
+        playingMusic = false;
+        setupMic();
+      }
+      else{
+        micOn = false;
+        playingMusic = true;
+        resetSketch();
+        songs[currentSong].play();
+      }
+    }
+    if(key == ',') {
+      channels /= 2;
+      if(channels < 16) {channels = 16;}
+      fft2 = new p5.FFT(0, channels);
+      if(micOn){
+        fft.setInput(mic);
+        fft2.setInput(mic);
+        waveform = fft.waveform();
+        spectrum = fft.analyze();
+        spectrumSplitWaves = fft2.analyze();
+      }
+      else{
+        fft.setInput();
+        fft2.setInput();
+        waveform = fft.waveform();
+        spectrum = fft.analyze();
+        spectrumSplitWaves = fft2.analyze();
+      }
+    }
+    if(key == '.') {
+      channels *= 2;
+      if(channels > 128) {channels = 128;}
+      fft2 = new p5.FFT(0, channels);
+      if(micOn){
+        fft.setInput(mic);
+        fft2.setInput(mic);
+        waveform = fft.waveform();
+        spectrum = fft.analyze();
+        spectrumSplitWaves = fft2.analyze();
+      }
+      else{
+        fft.setInput();
+        fft2.setInput();
+        waveform = fft.waveform();
+        spectrum = fft.analyze();
+        spectrumSplitWaves = fft2.analyze();
+      }
+    }
+    if(key == "k") {
+      baseFreq -= 1;
+      if(baseFreq < 1) {baseFreq = 1;}
+    }
+    if(key == "l") {
+      baseFreq += 1;
+      if(baseFreq > 10) {baseFreq = 10;}
+    }
   }
 }
 
-// function keyTyped(){
-//   if (key === 'r' && mic.enabled) {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.record(soundFile);
-//   }
-//   if (key === 'p') {
-//     soundFile.play();
-//   }
-//   if (key === 'v') {
-//     console.log("called drawSketch")
-//     drawSketch();
-//   }
-// }
-//
-// function keyReleased(){
-//   if (key === 'r') {
-//     // Tell recorder to record to a p5.SoundFile which we will use for playback
-//     recorder.stop();
-//   }
-// }
-
-// Draw the circles
 function drawCircles(){
   for(var i = 0; i < numCirclesX; i++){
     for(var j = 0; j < numCirclesY; j++){
@@ -290,7 +373,6 @@ function drawCircles(){
   }
 }
 
-// Return distance from a point to the mouse.
 function getDistance(x, y){
   let tempMouseX = mouseX;
   let tempMouseY = mouseY;
@@ -303,7 +385,6 @@ function getDistance(x, y){
   return Math.pow((Math.pow((x - tempMouseX),2) + Math.pow((y - tempMouseY),2)),0.5);
 }
 
-// Constrain Distance
 function constrainDistance(distance){
   if(distance > 30*windowWidth/numCirclesX/2){
         return windowWidth/numCirclesX/2;
@@ -321,11 +402,72 @@ function songUploaded(song){
   songs.push(song);
   songNames.push(song.file);
   console.log(song.file);
+}
+
+function firstSongUploaded(song){
+  songs.push(song);
+  songNames.push(song.file);
+  console.log(song.file);
   songLoaded = true;
+
+  resetSketch();
+
+  loadSound('assets/sounds/bensound-endlessmotion.mp3', secondSongUploaded);
+}
+
+function secondSongUploaded(song){
+  songs.push(song);
+  songNames.push(song.file);
+  console.log(song.file);
+
+  // Load the rest of the songs
+  loadSound('assets/sounds/liqwyd-summer-nights.wav', songUploaded);
+  loadSound('assets/sounds/bensound-acousticbreeze.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-anewbeginning.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-creativeminds.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-cute.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-dubstep.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-energy.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-epic.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-goinghigher.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-happyrock.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-inspire.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-perception.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-pianomoment.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-retrosoul.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-slowmotion.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-summer.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-sunny.mp3', songUploaded);
+  loadSound('assets/sounds/bensound-ukulele.mp3', songUploaded);
 }
 
 function customSongUploaded(song){
   songs.push(song);
   songNames.push(song.file.name);
   console.log(song.file.name);
+}
+
+function setupMic() {
+  // create an audio in
+  mic = new p5.AudioIn();
+  // users must manually enable their browser microphone for recording to work properly!
+  mic.start();
+  // create a sound recorder
+  recorder = new p5.SoundRecorder();
+  // connect the mic to the recorder
+  recorder.setInput(mic);
+  // create an empty sound file that we will use to playback the recording
+  soundFile = new p5.SoundFile();
+  // Patch the input to a volume analyzer
+  analyzer.setInput(mic);
+  // Setup fast Fourier Transform
+  fft = new p5.FFT();
+  fft2 = new p5.FFT(0, channels);
+  // Set Input to microphone
+  fft.setInput(mic);
+  fft2.setInput(mic);
+
+  waveform = fft.waveform();
+  spectrum = fft.analyze();
+  spectrumSplitWaves = fft2.analyze();
 }

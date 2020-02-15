@@ -39,8 +39,8 @@ function draw() {
 
   push();
   rotateZ(radians(rotationZ));
-  rotateX(radians(rotationX));
-  rotateY(radians(rotationY));
+  rotateX(-radians(rotationX));
+  //rotateY(radians(rotationZ));
   rotateZ(radians(360*mouseX/width));
   rotateX(radians(360*mouseY/width));
   rotateY(radians(360*mouseY/width));
