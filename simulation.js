@@ -9,6 +9,7 @@ function setup() {
   button.position(50, 10);
   button.mousePressed(generate);
   checkbox = createCheckbox('Show Scores', false);
+  checkbox.position(200, 10);
 }
 
 function draw() {
