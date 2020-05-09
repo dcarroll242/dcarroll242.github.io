@@ -26,6 +26,9 @@ let spectrumSplitWaves;
 let micOn = false;
 let baseFreq = 2;
 let maxAmp = .66;
+let showKey = false;
+let controlsImage;
+let controlsImageLoaded = false;
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
@@ -34,6 +37,7 @@ function setup() {
 
   soundFormats('mp3', 'ogg','wav');
   loadSound('assets/sounds/bensound-perception.mp3', firstSongUploaded);
+  controlsImage = loadImage('assets/images/Keyboard Layout.png', controlsImageLoadedSuccessful);
 }
 
 function draw() {
@@ -100,6 +104,11 @@ function draw() {
     maxAmp += .02;
     if(maxAmp > 2){maxAmp = 2;}
   }
+
+  if(showKey){
+    drawKey();
+  }
+  drawSmallKey();
 }
 
 function windowResized() {
@@ -359,6 +368,12 @@ function keyPressed() {
       if(baseFreq > 10) {baseFreq = 10;}
     }
   }
+  if(controlsImageLoaded) {
+    if(key == "h"){
+      if(showKey){showKey = false;}
+      else{showKey = true;}
+    }
+  }
 }
 
 function drawCircles(){
@@ -470,4 +485,41 @@ function setupMic() {
   waveform = fft.waveform();
   spectrum = fft.analyze();
   spectrumSplitWaves = fft2.analyze();
+}
+
+function drawKey(){
+  imageMode(CENTER);
+  newWidth = controlsImage.width;
+  newHeight = controlsImage.height;
+  if(newWidth > width || newHeight > height) {
+    xAR = width/newWidth;
+    yAR = height/newHeight;
+    if(xAR < yAR){
+      newWidth = newWidth * xAR;
+      newHeight = newHeight * xAR;
+    }
+    else {
+      newWidth = newWidth * yAR;
+      newHeight = newHeight * yAR;
+    }
+  }
+  image(controlsImage, width/2, height/2, newWidth, newHeight);
+}
+
+function drawSmallKey(){
+  colorMode(RGB);
+  stroke(1);
+  strokeWeight(1);
+  textAlign(CENTER);
+
+  textSize(12);
+  textAlign(RIGHT);
+  textStyle(ITALIC);
+  //textFont("Oswald");
+  fill(255);
+  text("Show/Hide Controls (H)", width-5, height-7);
+}
+
+function controlsImageLoadedSuccessful() {
+  controlsImageLoaded = true;
 }
