@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>Number Systems</title>
+<title>Number_Systems</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13081,12 +13081,12 @@ div#notebook {
 <p><hr style="height:2px;border:none;color:#333;background-color:#333;" /></p>
 <p>This lesson covers the following topics:
 <ul>
-    <li>A Brief History of Number Systems</li>
-    <li>How to Create a Number System</li>
-    <li>The Decimal Number System</li>
-    <li>The Binary Number System</li>
-    <li>The Octal Number System</li>
-    <li>The Hexadecimal Number System</li>
+    <li><a href="#history">A Brief History of Number Systems</a></li>
+    <li><a href="#create">How to Create a Number System</a></li>
+    <li><a href="#decimal">The Decimal Number System</a></li>
+    <li><a href="#binary">The Binary Number System</a></li>
+    <li><a href="#octal">The Octal Number System</a></li>
+    <li><a href="#hexadecimal">The Hexadecimal Number System</a></li>
 </ul>
 </p>
 </div>
@@ -13095,7 +13095,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
+<p><br><br><br>
+<a id='history'></a></p>
 <p><h3>A Brief History of Number Systems</h3></p>
 <p><hr style="height:1px;border:none;color:#333;" /></p>
 <iframe width="560" height="315"  src="https://www.youtube.com/embed/cZH0YnFpjwU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -13105,8 +13106,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
-<p><h3>How to Create the Decimal Number System</h3></p>
+<p><br><br><br>
+<a id='create'></a></p>
+<p><h3>How to Create a Number System</h3></p>
 <p><hr style="height:1px;border:none;color:#333;" /></p>
 <p><p>It's important to note that the <u>base</u> of the number system determines the <u>number of symbols</u> available to use in that same number system. From there, it's simply a matter of learning how number systems are structured (no need to fear, they are all created using the <i>exact</i> same process). Below is a list of the symbols available in the number systems discussed during this lesson.
     <ul>
@@ -13115,6 +13117,9 @@ div#notebook {
         <li>Octal (base 8) &rarr; {0,1,2,3,4,5,6,7}</li>
         <li>Hexadecimal (base 16) &rarr; {0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}</li>
     </ul>
+</p></p>
+<p><p>
+    Below shows exactly how the Decimal System is created, along with an example, then extrapolating this information to form the Binary, Octal, and Hexadecimal Number Systems.
 </p>
 <img src="https://dcarroll242.github.io/Number%20Systems/Decimal%20Number%20System.gif" alt="description of gif" style="width:75%;height:auto;margin:0px;"/></p>
 
@@ -13124,10 +13129,12 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
+<p><br><br><br>
+<a id='decimal'></a></p>
 <p><h3>The Decimal Number System</h3></p>
 <p><hr style="height:1px;border:none;color:#333;" /></p>
-<p><p>I am going to assume that you are already extremely familiar with the Decimal Number System. After all, you've likely spent the majority of you academic career studying it. And although you may consider yourself an "expert" in the Decimal System, it is very common for students to express that they've had a "revelation" after learning about other number systems and that they wished they'd have been taught this when they were much younger. For many students, it sort of feels like someone has removed a great veil that's been hiding the intricacies of Mathematics.</p>
+<p><p>Decimal refers to the base-10 numbering system. The decimal numbering system uses the numerals 0-1-2-3-4-5-6-7-8-9. You are probably extremely familiar with the Decimal Number System. After all, you've likely spent the majority of you academic career studying it. And although you may consider yourself an expert, it is not very common for students to have a previous understanding of how the system actually works and usually express that they've had a "revelation" after learning about how it's created and that they wish they were taught this when they were much younger. It sort of feels like someone has removed a great veil that's been hiding the intricacies of Mathematics from their eyes.</p></p>
+<p><p>Below is a truncated version (missing the decimal places) of the Decimal Number System, along with its corresponding place-values.</p>
 <img src="https://dcarroll242.github.io/Number%20Systems/Decimal%20Number%20System%20Structure.png" alt="description of gif" style="width:50%;height:auto;margin:0px;"/></p>
 
 </div>
@@ -13136,9 +13143,23 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
+<p><br><br><br>
+<a id='binary'></a></p>
 <p><h3>The Binary Number System</h3></p>
-<p><hr style="height:1px;border:none;color:#333;" />
+<p><hr style="height:1px;border:none;color:#333;" /></p>
+<p>Binary refers to the base-2 numbering system. The binary numbering system uses the numerals 0 and 1. The Binary Number System is of particular insterest to those who work with computers because it's technically the underlying structure to every "classical" computing device ever made. The only exception to this rule are quantum computers, which use qubits as their base unit instead of bits.</p>
+<p>A bit is a unit of information expressed as either a 1 or 0 (ON or OFF) in binary notation. Therefore, each digit in a binary number represents a bit. Physically, a bit is simply a switch that's either in an ON or OFF state. In the real world, this can be expressed in many ways. It could be a light that's turned ON or OFF (fiber), it could be a copper wire where electrical current is turned ON or OFF (ethernet), it could be an electromagnetic wave where the amplitude or frequency is either HIGH or LOW (wireless), it could be a magnetic 1 or 0 on a metal disk (hard drives), it could be a cell that is either charged or not (solid state hard drives), et cetera...</p>
+<p>Understanding binary is essential to understanding Computer Science (the study of computation and information). The storage and transmission of ALL information via computers is done in binary; ones and zeros, ons and offs. Computers simply translate binary numbers into something that humans can understand and vice-versa. For example, the number 01000001 gets transformed into the letter "A". <i>(see <a href="https://www.ascii-code.com/">ASCII Table</a>)</i></p><p><p>Important Naming Conventions:</p></p>
+<p><ul>
+    <li>8 Bits = 1 Byte</li>
+    <li>1,024 Bytes = 1 Kilobyte</li>
+    <li>1,024 Kilobytes = 1 Megabyte</li>
+    <li>1,024 Megabytes = 1 Gigabyte</li>
+    <li>1,024 Gigabytes = 1 Terabyte</li>
+    <li>1,024 Terabytes = 1 Petabyte</li>
+    <li>1,024 Petabytes = 1 Exobyte</li>
+</ul></p>
+<p><p>Below is a truncated version of the Binary Number System, along with its corresponding place-values.</p>
 <img src="https://dcarroll242.github.io/Number%20Systems/Binary%20Number%20System%20Structure.png" alt="description of gif" style="width:50%;height:auto;margin:0px;"/></p>
 
 </div>
@@ -13147,9 +13168,13 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
+<p><br><br><br>
+<a id='octal'></a></p>
 <p><h3>The Octal Number System</h3></p>
-<p><hr style="height:1px;border:none;color:#333;" />
+<p><hr style="height:1px;border:none;color:#333;" /></p>
+<p><p>Octal refers to the base-8 numbering system. The octal numbering system uses the numerals 0-1-2-3-4-5-6-7. In computing environments, it is commonly used as a shorter representation of binary numbers by grouping binary digits into threes. The chmod command in Linux or UNIX uses octal to assign file permissions.</p></p>
+<p><p>Octal is another way to count numbers. While humans normally count in tens, and machines count in twos, it is possible to use any number as the basis for counting and calculation. Some Native American tribes have used octal by counting the spaces between fingers. Characters in the 2009 film “Avatar” used octal because they had four fingers on each hand. Some mathematicians have proposed the wider adoption of octal due to it being a highly composite number. And finally, using octal is a convenient way to abbreviate binary numbers.</p></p>
+<p><p>Below is a truncated version of the Octal Number System, along with its corresponding place-values.</p>
 <img src="https://dcarroll242.github.io/Number%20Systems/Octal%20Number%20System%20Structure.png" alt="description of gif" style="width:50%;height:auto;margin:0px;"/></p>
 
 </div>
@@ -13158,9 +13183,13 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br><br><br></p>
+<p><br><br><br>
+<a id='hexadecimal'></a></p>
 <p><h3>The Hexadecimal Number System</h3></p>
-<p><hr style="height:1px;border:none;color:#333;" />
+<p><hr style="height:1px;border:none;color:#333;" /></p>
+<p><p>Hexadecimal refers to the base-16 numbering system (hex=6 + decimal=10). The hexadecimal numbering system uses the numerals 0-1-2-3-4-5-6-7-8-9-A-B-C-D-E-F. The symbols "0"–"9" represent the values zero to nine, and "A"–"F" (or alternatively "a"–"f") represent the values ten to fifteen.</p>
+<p>Hexadecimal numerals are widely used by computer system designers and programmers, as they provide a human-friendly representation of binary-coded values. Each hexadecimal digit represents four binary digits, also known as a nibble, which is half a byte. Hexadecimal is also extremely useful as a truncated way of representing colors, in which there are almost 17,000,000 possible colors for a single pixel. For example, the binary number for "red" is 111111110000000000000000, while the same number for "red" in hexadecimal is FF0000.&lt;/p&gt;</p>
+<p><p>Below is a truncated version of the Hexadecimal Number System, along with its corresponding place-values.</p>
 <img src="https://dcarroll242.github.io/Number%20Systems/Hexadecimal%20Number%20System%20Structure.png" alt="description of gif" style="width:50%;height:auto;margin:0px;"/></p>
 
 </div>
