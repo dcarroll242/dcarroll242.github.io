@@ -9,7 +9,7 @@ function setup() {
   createCanvas(452, 150);
   background(255);
 
-  var points = font.textToPoints('Welcome!', 45, 115, 75, {
+  var points = font.textToPoints('Welcome!', 45, 150, 75, {
     sampleFactor: 0.25
   });
 
