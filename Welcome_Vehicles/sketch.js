@@ -6,7 +6,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(452, 150);
+  createCanvas(452, 200);
   background(255);
 
   var points = font.textToPoints('Welcome!', 65, 150, 75, {
