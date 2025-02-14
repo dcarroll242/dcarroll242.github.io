@@ -9,7 +9,7 @@ function setup() {
   createCanvas(452, 200);
   background(255);
 
-  var points = font.textToPoints('Quadratics!', 65, 150, 75, {
+  var points = font.textToPoints('Quadratics!', 20, 150, 75, {
     sampleFactor: 0.25
   });
 
